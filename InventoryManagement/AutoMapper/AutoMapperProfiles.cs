@@ -1,6 +1,9 @@
-﻿using InventoryManagement.Dtos;
-using InventoryManagement.Models;
+﻿using InventoryManagement.Models;
 using AutoMapper;
+using InventoryManagement.Dtos.ProductDto;
+using InventoryManagement.Dtos.AuthDto;
+using InventoryManagement.Dtos.StockDto;
+using InventoryManagement.Dtos.IssueProductDto;
 
 namespace InventoryManagement.AutoMapper
 {
@@ -16,6 +19,10 @@ namespace InventoryManagement.AutoMapper
             CreateMap<UserDetailDto, User>().ReverseMap();
             CreateMap<UserLoginDto, User>().ReverseMap();
             CreateMap<UserRegistrationDto, User>().ReverseMap();
+
+            CreateMap<CreateStockDto, Stock>().ReverseMap();
+
+            CreateMap<CreateIssueProductDto, IssueProduct>().ReverseMap();
         }
 
     }

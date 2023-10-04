@@ -1,5 +1,5 @@
 ﻿using InventoryManagement.Data;
-using InventoryManagement.Dtos;
+using InventoryManagement.Dtos.AuthDto;
 using InventoryManagement.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;

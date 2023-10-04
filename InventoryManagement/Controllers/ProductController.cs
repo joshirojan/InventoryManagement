@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
-using InventoryManagement.Dtos;
+using InventoryManagement.Dtos.ProductDto;
 using InventoryManagement.Models;
 using InventoryManagement.Services.ProductServices;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +11,7 @@ namespace InventoryManagement.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,Roles = "Admin")]
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;

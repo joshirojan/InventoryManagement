@@ -1,14 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using System.ComponentModel.DataAnnotations;
+﻿using InventoryManagement.Models;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
-namespace InventoryManagement.Models
+namespace InventoryManagement.Dtos.ProductDto
 {
-    public class Product
+    public class CreateProductDto
     {
-        [Key]
-        public int Id { get; set; }
-
         [Required, MaxLength(50)]
         public string Name { get; set; } = string.Empty;
 
@@ -24,11 +22,7 @@ namespace InventoryManagement.Models
         [ValidateNever]
         public virtual Category? Category { get; set; }
 
-        public DateTime CreatedDateTime { get; set; } 
-
-        public bool isDeleted { get; set; } = false;
-
-        public int Stock { get; set; }
-
     }
+
 }
+

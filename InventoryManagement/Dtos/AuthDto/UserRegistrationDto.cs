@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace InventoryManagement.Dtos
+namespace InventoryManagement.Dtos.AuthDto
 {
     public class UserRegistrationDto
     {

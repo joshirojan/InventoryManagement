@@ -1,4 +1,4 @@
-﻿using InventoryManagement.Dtos;
+﻿using InventoryManagement.Dtos.AuthDto;
 using InventoryManagement.Models;
 
 namespace InventoryManagement.Services.AuthServices

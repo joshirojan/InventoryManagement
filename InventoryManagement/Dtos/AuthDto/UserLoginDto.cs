@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace InventoryManagement.Dtos
+namespace InventoryManagement.Dtos.AuthDto
 {
     public class UserLoginDto
     {

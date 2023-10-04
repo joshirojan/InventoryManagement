@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using InventoryManagement.Data;
-using InventoryManagement.Dtos;
+using InventoryManagement.Dtos.AuthDto;
 using InventoryManagement.Models;
 using InventoryManagement.Services.AuthServices;
 using Microsoft.AspNetCore.Http;
@@ -17,14 +17,12 @@ namespace InventoryManagement.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly ApiDbContext _context;
-        private readonly IConfiguration _config;
+
         private readonly IAuthService _authService;
         private readonly IMapper _mapper;
-        public AuthController(ApiDbContext context, IConfiguration config, IAuthService authService, IMapper mapper)
+        public AuthController(IAuthService authService, IMapper mapper)
         {
-            _context = context;
-            _config = config;
+
             _authService = authService;
             _mapper = mapper;
 

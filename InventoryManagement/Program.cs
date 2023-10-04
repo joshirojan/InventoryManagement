@@ -1,7 +1,9 @@
 using InventoryManagement.AutoMapper;
 using InventoryManagement.Data;
 using InventoryManagement.Services.AuthServices;
+using InventoryManagement.Services.IssueProductServices;
 using InventoryManagement.Services.ProductServices;
+using InventoryManagement.Services.StockServices;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -19,6 +21,8 @@ builder.Services.AddDbContext<ApiDbContext>(options =>
 
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IStockService, StockService>();
+builder.Services.AddScoped<IIssueProductService, IssueProductService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

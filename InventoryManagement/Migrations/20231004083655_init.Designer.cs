@@ -3,6 +3,7 @@ using System;
 using InventoryManagement.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InventoryManagement.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    partial class ApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231004083655_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.22");
@@ -75,6 +77,33 @@ namespace InventoryManagement.Migrations
                         });
                 });
 
+            modelBuilder.Entity("InventoryManagement.Models.IssueProduct", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("IssueProducts");
+                });
+
             modelBuilder.Entity("InventoryManagement.Models.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -101,6 +130,9 @@ namespace InventoryManagement.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("Stock")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("isDeleted")
                         .HasColumnType("INTEGER");
 
@@ -115,100 +147,110 @@ namespace InventoryManagement.Migrations
                         {
                             Id = 1,
                             CategoryId = 1,
-                            CreatedDateTime = new DateTime(2023, 10, 2, 22, 45, 44, 373, DateTimeKind.Local).AddTicks(3664),
+                            CreatedDateTime = new DateTime(2023, 10, 4, 14, 21, 55, 209, DateTimeKind.Local).AddTicks(4778),
                             Description = "Powerful laptop from Dell with great performance.",
                             ImageUrl = "https://www.informationq.com/wp-content/uploads/2013/11/Dell-Inspiron-15-3521-15.6-inch-Laptop-Black01.jpg",
                             Name = "Dell Laptop",
+                            Stock = 0,
                             isDeleted = false
                         },
                         new
                         {
                             Id = 2,
                             CategoryId = 2,
-                            CreatedDateTime = new DateTime(2023, 10, 2, 22, 45, 44, 373, DateTimeKind.Local).AddTicks(3678),
+                            CreatedDateTime = new DateTime(2023, 10, 4, 14, 21, 55, 209, DateTimeKind.Local).AddTicks(4792),
                             Description = "High-end desktop computer from Apple.",
                             ImageUrl = "https://images.unsplash.com/photo-1517059224940-d4af9eec41b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
                             Name = "Mac PC",
+                            Stock = 0,
                             isDeleted = false
                         },
                         new
                         {
                             Id = 3,
                             CategoryId = 3,
-                            CreatedDateTime = new DateTime(2023, 10, 2, 22, 45, 44, 373, DateTimeKind.Local).AddTicks(3680),
+                            CreatedDateTime = new DateTime(2023, 10, 4, 14, 21, 55, 209, DateTimeKind.Local).AddTicks(4793),
                             Description = "Wireless mouse and keyboard combo for convenience.",
                             ImageUrl = "https://img.freepik.com/free-vector/print_53876-43658.jpg?t=st=1696176612~exp=1696177212~hmac=92132b1b0cd9692963f9fc6eb1fb61cae00ce7af4161822c24a8429a6fb083c0",
                             Name = "Mouse and Keyboard Combo",
+                            Stock = 0,
                             isDeleted = false
                         },
                         new
                         {
                             Id = 4,
                             CategoryId = 4,
-                            CreatedDateTime = new DateTime(2023, 10, 2, 22, 45, 44, 373, DateTimeKind.Local).AddTicks(3681),
+                            CreatedDateTime = new DateTime(2023, 10, 4, 14, 21, 55, 209, DateTimeKind.Local).AddTicks(4794),
                             Description = "Versatile printer from HP for all your printing needs.",
                             ImageUrl = "https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aHAlMjBwcmludGVyfGVufDB8fDB8fHww&w=1000&q=80",
                             Name = "HP Printer",
+                            Stock = 0,
                             isDeleted = false
                         },
                         new
                         {
                             Id = 5,
                             CategoryId = 5,
-                            CreatedDateTime = new DateTime(2023, 10, 2, 22, 45, 44, 373, DateTimeKind.Local).AddTicks(3682),
+                            CreatedDateTime = new DateTime(2023, 10, 4, 14, 21, 55, 209, DateTimeKind.Local).AddTicks(4795),
                             Description = "Large-capacity external hard drive for storage.",
                             ImageUrl = "https://media.istockphoto.com/id/496402410/photo/external-hard-drive-for-backup.jpg?s=612x612&w=0&k=20&c=Ul6uXVrMdFEmIC7xH_f54tWfYQSExa1_j70eP-5fuyM=",
                             Name = "External Hard Drive",
+                            Stock = 0,
                             isDeleted = false
                         },
                         new
                         {
                             Id = 6,
                             CategoryId = 6,
-                            CreatedDateTime = new DateTime(2023, 10, 2, 22, 45, 44, 373, DateTimeKind.Local).AddTicks(3684),
+                            CreatedDateTime = new DateTime(2023, 10, 4, 14, 21, 55, 209, DateTimeKind.Local).AddTicks(4798),
                             Description = "High-refresh-rate gaming monitor for a smooth gaming experience.",
                             ImageUrl = "https://img.freepik.com/free-photo/view-computer-monitor-display_23-2150757434.jpg",
                             Name = "Gaming Monitor",
+                            Stock = 0,
                             isDeleted = false
                         },
                         new
                         {
                             Id = 7,
                             CategoryId = 7,
-                            CreatedDateTime = new DateTime(2023, 10, 2, 22, 45, 44, 373, DateTimeKind.Local).AddTicks(3685),
+                            CreatedDateTime = new DateTime(2023, 10, 4, 14, 21, 55, 209, DateTimeKind.Local).AddTicks(4799),
                             Description = "Fast and reliable wireless router for home networking.",
                             ImageUrl = "https://img.freepik.com/premium-vector/vector-wireless-router-free-wifi-zone-concept-modern-flat-illustration_660702-331.jpg?w=2000",
                             Name = "Wireless Router",
+                            Stock = 0,
                             isDeleted = false
                         },
                         new
                         {
                             Id = 8,
                             CategoryId = 5,
-                            CreatedDateTime = new DateTime(2023, 10, 2, 22, 45, 44, 373, DateTimeKind.Local).AddTicks(3686),
+                            CreatedDateTime = new DateTime(2023, 10, 4, 14, 21, 55, 209, DateTimeKind.Local).AddTicks(4800),
                             Description = "Portable external SSD for quick data access on the go.",
                             ImageUrl = "https://i5.walmartimages.com/asr/3daa0c60-384f-4d78-a135-04d74cf70e09.133b2adf608c606c41dd16e3f4afb4fd.jpeg?odnHeight=2000&odnWidth=2000&odnBg=FFFFFF",
                             Name = "External SSD",
+                            Stock = 0,
                             isDeleted = false
                         },
                         new
                         {
                             Id = 9,
                             CategoryId = 8,
-                            CreatedDateTime = new DateTime(2023, 10, 2, 22, 45, 44, 373, DateTimeKind.Local).AddTicks(3687),
+                            CreatedDateTime = new DateTime(2023, 10, 4, 14, 21, 55, 209, DateTimeKind.Local).AddTicks(4801),
                             Description = "Compact USB flash drive with ample storage capacity.",
                             ImageUrl = "https://cdn.pixabay.com/photo/2015/07/20/19/50/usb-853230_1280.png",
                             Name = "USB Flash Drive",
+                            Stock = 0,
                             isDeleted = false
                         },
                         new
                         {
                             Id = 10,
                             CategoryId = 8,
-                            CreatedDateTime = new DateTime(2023, 10, 2, 22, 45, 44, 373, DateTimeKind.Local).AddTicks(3689),
+                            CreatedDateTime = new DateTime(2023, 10, 4, 14, 21, 55, 209, DateTimeKind.Local).AddTicks(4803),
                             Description = "High-performance graphics card for gaming and content creation.",
                             ImageUrl = "https://images.pexels.com/photos/6341789/pexels-photo-6341789.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
                             Name = "Graphics Card",
+                            Stock = 0,
                             isDeleted = false
                         });
                 });
@@ -239,6 +281,28 @@ namespace InventoryManagement.Migrations
                             Id = 2,
                             Name = "User"
                         });
+                });
+
+            modelBuilder.Entity("InventoryManagement.Models.Stock", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Stocks");
                 });
 
             modelBuilder.Entity("InventoryManagement.Models.User", b =>
@@ -277,7 +341,7 @@ namespace InventoryManagement.Migrations
                             Id = 1,
                             Email = "ram.doe@example.com",
                             FullName = "Ram Doe",
-                            PasswordHash = "123456",
+                            PasswordHash = "$2a$11$XxNdWXeHeEEIxVjQ98eJCOYlFB6tPaEZJAU85S/fphTkTmTOHKBxe",
                             RoleId = 1
                         },
                         new
@@ -285,9 +349,28 @@ namespace InventoryManagement.Migrations
                             Id = 2,
                             Email = "shyam.doe@example.com",
                             FullName = "Shyam Doe",
-                            PasswordHash = "123456",
+                            PasswordHash = "$2a$11$pMVuC24kuwheIxXyBgYapuBBvKYBg8hDzAeVv5eldKDUTWzOx04.a",
                             RoleId = 2
                         });
+                });
+
+            modelBuilder.Entity("InventoryManagement.Models.IssueProduct", b =>
+                {
+                    b.HasOne("InventoryManagement.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("InventoryManagement.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("InventoryManagement.Models.Product", b =>
@@ -299,6 +382,17 @@ namespace InventoryManagement.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("InventoryManagement.Models.Stock", b =>
+                {
+                    b.HasOne("InventoryManagement.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("InventoryManagement.Models.User", b =>

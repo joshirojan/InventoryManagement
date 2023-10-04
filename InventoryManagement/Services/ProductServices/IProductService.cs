@@ -1,7 +1,4 @@
-﻿
-
-
-using InventoryManagement.Dtos;
+﻿using InventoryManagement.Dtos.ProductDto;
 using InventoryManagement.Models;
 
 namespace InventoryManagement.Services.ProductServices
