@@ -31,7 +31,7 @@ namespace InventoryManagement.Services.IssueProductServices
         public async Task<IssueProduct> DeleteIssueProductAsync(IssueProduct issueProduct)
         {
             var product = await _dbContext.Products.FirstOrDefaultAsync(x => x.Id == issueProduct.ProductId);
-            product.Stock -= issueProduct.Quantity;
+            product.Stock += issueProduct.Quantity;
 
             _dbContext.IssueProducts.Remove(issueProduct);
             await _dbContext.SaveChangesAsync();

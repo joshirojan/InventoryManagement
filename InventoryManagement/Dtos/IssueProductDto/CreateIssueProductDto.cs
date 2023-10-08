@@ -7,6 +7,8 @@ namespace InventoryManagement.Dtos.IssueProductDto
 {
     public class CreateIssueProductDto
     {
+        [Key]
+        public int Id { get; set; }
         public int UserId { get; set; }
 
         [ForeignKey("UserId")]
@@ -21,6 +23,8 @@ namespace InventoryManagement.Dtos.IssueProductDto
 
         [Range(1, 1000)]
         public int Quantity { get; set; }
+
+        public DateTime CreatedDate { get; set; }
 
     }
 }

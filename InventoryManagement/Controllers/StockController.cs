@@ -2,6 +2,8 @@
 using InventoryManagement.Dtos.StockDto;
 using InventoryManagement.Models;
 using InventoryManagement.Services.StockServices;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +11,7 @@ namespace InventoryManagement.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class StockController : ControllerBase
     {
         private readonly IStockService _stockService;
@@ -49,20 +52,34 @@ namespace InventoryManagement.Controllers
             if (createStockDto == null)
                 return BadRequest();
 
+            if (createStockDto.ProductId == 0)
+            {
+                return BadRequest("Select Product");
+            }
+
+            if (createStockDto.Quantity == 0)
+            {
+                return BadRequest("Enter Quantity Value");
+            }
+
             Stock stock = new Stock
             {
                 ProductId = createStockDto.ProductId,
                 Quantity = createStockDto.Quantity,
+                CreatedDate = DateTime.Now,
             };
 
             var returnVal = await _stockService.CreateStockAsync(stock);
 
-            var newStockDto = _mapper.Map<CreateStockDto>(returnVal);
+            var sendVal = await _stockService.GetStockAsync(returnVal.Id);
+
+            var newStockDto = _mapper.Map<CreateStockDto>(sendVal);
 
             return Ok(newStockDto);
         }
 
         [HttpPut("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] CreateStockDto createStockDto)
         {
 
@@ -76,6 +93,8 @@ namespace InventoryManagement.Controllers
 
             var retVal = await _stockService.UpdateStockAsync(stock, createStockDto);
 
+            var sendVal = await _stockService.GetStockAsync(retVal.Id);
+
             var newStockDto = _mapper.Map<CreateStockDto>(retVal);
 
             return Ok(newStockDto);
@@ -83,6 +102,7 @@ namespace InventoryManagement.Controllers
 
         [HttpDelete]
         [Route("{id:int}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
 

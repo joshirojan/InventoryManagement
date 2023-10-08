@@ -7,6 +7,9 @@ namespace InventoryManagement.Dtos.StockDto
 {
     public class CreateStockDto
     {
+        [Key]
+        public int Id { get; set; }
+
         public int ProductId { get; set; }
 
         [ForeignKey("ProductId")]
@@ -15,6 +18,8 @@ namespace InventoryManagement.Dtos.StockDto
 
         [Range(0, 1000)]
         public int Quantity { get; set; }
+
+        public DateTime CreatedDate { get; set; }
 
     }
 }

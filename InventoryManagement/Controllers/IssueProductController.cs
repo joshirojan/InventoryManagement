@@ -3,12 +3,15 @@ using InventoryManagement.Dtos.IssueProductDto;
 using InventoryManagement.Models;
 using InventoryManagement.Services.IssueProductServices;
 using InventoryManagement.Services.ProductServices;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InventoryManagement.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class IssueProductController : ControllerBase
     {
         private readonly IProductService _productService;
@@ -68,16 +71,25 @@ namespace InventoryManagement.Controllers
 
             var returnVal = await _issueProductService.CreateIssueProductAsync(issueProduct);
 
-            var newCreateIssueProductDto = _mapper.Map<CreateIssueProductDto>(returnVal);
+            var sendVal = await _issueProductService.GetIssueProductAsync(returnVal.Id);
+
+            var newCreateIssueProductDto = _mapper.Map<CreateIssueProductDto>(sendVal);
 
             return Ok(newCreateIssueProductDto);
         }
 
         [HttpPut("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] CreateIssueProductDto createIssueProductDto)
         {
             if (createIssueProductDto == null)
                 return BadRequest();
+            if(createIssueProductDto.UserId==0)
+                return BadRequest("Select User");
+            if (createIssueProductDto.ProductId == 0)
+                return BadRequest("Select User");
+            if (createIssueProductDto.Quantity == 0)
+                return BadRequest("Select User");
 
             var issueProduct = await _issueProductService.GetIssueProductAsync(id);
 
@@ -95,13 +107,16 @@ namespace InventoryManagement.Controllers
 
             var retVal = await _issueProductService.UpdateIssueProductAsync(issueProduct, createIssueProductDto);
 
-            var newCreateIssueProductDto = _mapper.Map<CreateIssueProductDto>(retVal);
+            var sendVal = await _issueProductService.GetIssueProductAsync(retVal.Id);
+
+            var newCreateIssueProductDto = _mapper.Map<CreateIssueProductDto>(sendVal);
 
             return Ok(newCreateIssueProductDto);
         }
 
         [HttpDelete]
         [Route("{id:int}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             var issueProduct = await _issueProductService.GetIssueProductAsync(id);

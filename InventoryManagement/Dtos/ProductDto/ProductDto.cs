@@ -7,6 +7,9 @@ namespace InventoryManagement.Dtos.ProductDto
 {
     public class ProductDto
     {
+        [Key]
+        public int Id { get; set; }
+
         [Required, MaxLength(50)]
         public string Name { get; set; } = string.Empty;
 
@@ -23,6 +26,7 @@ namespace InventoryManagement.Dtos.ProductDto
         public virtual Category? Category { get; set; }
 
         public int Stock { get; set; }
+
 
     }
 

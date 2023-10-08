@@ -13,10 +13,11 @@ namespace InventoryManagement.AutoMapper
         {
             CreateMap<ProductDto, Product>().ReverseMap();
             CreateMap<CreateProductDto, Product>().ReverseMap();
-            //CreateMap<UserDTO, UserDomainModel>().ForMember(x => x.FullName, option => option.MapFrom(x=> x.DisplayName))
-            //    .ReverseMap();
+            /*       CreateMap<UserDetailDto, User>().ForMember(x => x.FullName, option => option.MapFrom(x => x.DisplayName))
+                       .ReverseMap();*/
 
-            CreateMap<UserDetailDto, User>().ReverseMap();
+            CreateMap<UserDetailDto, User>()
+                .ReverseMap();
             CreateMap<UserLoginDto, User>().ReverseMap();
             CreateMap<UserRegistrationDto, User>().ReverseMap();
 

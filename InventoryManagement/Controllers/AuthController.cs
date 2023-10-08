@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using InventoryManagement.Data;
 using InventoryManagement.Dtos.AuthDto;
+using InventoryManagement.Dtos.ProductDto;
 using InventoryManagement.Models;
 using InventoryManagement.Services.AuthServices;
 using Microsoft.AspNetCore.Http;
@@ -17,7 +18,6 @@ namespace InventoryManagement.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-
         private readonly IAuthService _authService;
         private readonly IMapper _mapper;
         public AuthController(IAuthService authService, IMapper mapper)
@@ -49,11 +49,12 @@ namespace InventoryManagement.Controllers
                 Email = dto.Email,
                 PasswordHash = passwordHash,
                 RoleId = dto.RoleId
-           
             };
 
-            var retVal = _authService.Register(user);
+            var retVal =await  _authService.Register(user);
+
             var newUser = _mapper.Map<UserDetailDto>(retVal);
+
             return Ok(newUser);
         }
 
@@ -70,9 +71,7 @@ namespace InventoryManagement.Controllers
 
             string token = _authService.GenerateToken(user);
 
-            return Ok(token);
+            return Ok(new { token });
         }
-
-
     }
 }

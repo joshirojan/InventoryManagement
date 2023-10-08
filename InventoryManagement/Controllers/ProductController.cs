@@ -11,7 +11,7 @@ namespace InventoryManagement.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,Roles = "Admin")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
@@ -28,7 +28,7 @@ namespace InventoryManagement.Controllers
             var products = await _productService.GetAllProductAsync();
 
             var productDto = _mapper.Map<List<ProductDto>>(products);
-           
+
             return Ok(productDto);
         }
 
@@ -45,12 +45,15 @@ namespace InventoryManagement.Controllers
             return Ok(productDto);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateProductDto createProductDto)
         {
-
             if (createProductDto == null)
                 return BadRequest();
+
+            if (createProductDto.CategoryId == 0)
+                return BadRequest("Select Category");
 
             Product product = new Product
             {
@@ -62,17 +65,24 @@ namespace InventoryManagement.Controllers
 
             var returnVal = await _productService.CreateProductAsync(product);
 
-            var newProductDto = _mapper.Map<CreateProductDto>(returnVal);
+            var sendVal = await _productService.GetProductAsync(returnVal.Id);
 
-            return Ok(newProductDto);
+            var productDto = _mapper.Map<List<ProductDto>>(sendVal);
+
+            return Ok(productDto);
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] CreateProductDto createProductDto)
         {
 
             if (createProductDto == null)
                 return BadRequest();
+
+            if (createProductDto.CategoryId == 0) {
+                return BadRequest("Select Category");
+            }
 
             var product = await _productService.GetProductAsync(id);
 
@@ -81,7 +91,9 @@ namespace InventoryManagement.Controllers
 
             var retVal = await _productService.UpdateProductAsync(product, createProductDto);
 
-            var newProductDto = _mapper.Map<CreateProductDto>(retVal);
+            var sendVal = await _productService.GetProductAsync(retVal.Id);
+
+            var newProductDto = _mapper.Map<ProductDto>(sendVal);
 
             return Ok(newProductDto);
         }
@@ -90,15 +102,12 @@ namespace InventoryManagement.Controllers
         [Route("{id:int}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
-
             var product = await _productService.GetProductAsync(id);
-
 
             if (product == null)
                 return NotFound();
 
             var retVal = await _productService.DeleteProductAsync(product);
-
 
             var newProductDto = _mapper.Map<CreateProductDto>(retVal);
 

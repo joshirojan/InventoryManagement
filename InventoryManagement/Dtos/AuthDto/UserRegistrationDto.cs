@@ -14,11 +14,12 @@ namespace InventoryManagement.Dtos.AuthDto
 
         [Required]
         [MaxLength(50)]
-        public string PasswordHash { get; set; } = string.Empty;
+        [EmailAddress]
+        public string Email { get; set; } = string.Empty;
 
         [Required]
         [MaxLength(50)]
-        public string Email { get; set; } = string.Empty;
+        public string PasswordHash { get; set; } = string.Empty;
 
         public int RoleId { get; set; }
 

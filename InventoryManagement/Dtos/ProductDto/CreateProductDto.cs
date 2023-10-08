@@ -22,6 +22,7 @@ namespace InventoryManagement.Dtos.ProductDto
         [ValidateNever]
         public virtual Category? Category { get; set; }
 
+
     }
 
 }
