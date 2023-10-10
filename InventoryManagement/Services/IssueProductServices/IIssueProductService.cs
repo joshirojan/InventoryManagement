@@ -14,5 +14,7 @@ namespace InventoryManagement.Services.IssueProductServices
 
         Task<IssueProduct> DeleteIssueProductAsync(IssueProduct issueProduct);
 
+        Task<List<IssueProduct>> SearchIssueProductAsync(string keyword);
+
     }
 }

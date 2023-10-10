@@ -16,6 +16,18 @@ namespace InventoryManagement.Services.StockServices
             _dbContext = context;
         }
 
+        public async Task<List<Stock>> SearchStockAsync(string keyword)
+        {
+            if (keyword == null)
+            {
+                var stocks = await _dbContext.Stocks.Include(p => p.Product).ToListAsync();
+                return stocks;
+            }
+            var matchingStocks = _dbContext.Stocks.Include(p => p.Product)
+                .Where(x => x.Product.Name.ToLower().Contains(keyword.ToLower()))
+                .ToList();
+            return matchingStocks;
+        }
         public async Task<Stock> CreateStockAsync(Stock stock)
         {
             stock.CreatedDate = DateTime.Now;

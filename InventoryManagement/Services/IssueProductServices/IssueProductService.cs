@@ -16,6 +16,25 @@ namespace InventoryManagement.Services.IssueProductServices
             _dbContext = dbContext;
         }
 
+        public async Task<List<IssueProduct>> SearchIssueProductAsync(string keyword)
+        {
+            if (keyword == null)
+            {
+                var issueProducts = await _dbContext.IssueProducts.Include(p => p.User)
+                .ThenInclude(o => o.role)
+                .Include(q => q.Product)
+                .ThenInclude(r => r.Category)
+                .ToListAsync();
+                return issueProducts;
+            }
+            var matchingIssueProducts = _dbContext.IssueProducts.Include(p => p.User)
+                .ThenInclude(o => o.role)
+                .Include(q => q.Product)
+                .ThenInclude(r => r.Category)
+                .Where(x => x.User.FullName.ToLower().Contains(keyword.ToLower()))
+                .ToList();
+            return matchingIssueProducts;
+        }
         public async Task<IssueProduct> CreateIssueProductAsync(IssueProduct issueProduct)
         {
             issueProduct.CreatedDate = DateTime.Now;

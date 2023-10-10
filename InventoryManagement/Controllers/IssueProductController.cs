@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using InventoryManagement.Dtos.IssueProductDto;
+using InventoryManagement.Dtos.ProductDto;
 using InventoryManagement.Models;
 using InventoryManagement.Services.IssueProductServices;
 using InventoryManagement.Services.ProductServices;
@@ -22,6 +23,22 @@ namespace InventoryManagement.Controllers
             _productService = productService;
             _issueProductService = issueProductService;
             _mapper = mapper;
+        }
+
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchIssueProducts(string? keyword)
+        {
+            if (keyword == null)
+            {
+                var allIssueProducts = await _issueProductService.GetAllIssueProductAsync();
+                return Ok(allIssueProducts);
+            }
+            var issueProducts = await _issueProductService.SearchIssueProductAsync(keyword);
+
+            var issueProductDto = _mapper.Map<List<CreateIssueProductDto>>(issueProducts);
+
+            return Ok(issueProductDto);
+
         }
 
         [HttpGet]

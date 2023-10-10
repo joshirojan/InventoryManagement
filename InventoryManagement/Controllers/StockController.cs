@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using InventoryManagement.Dtos.ProductDto;
 using InventoryManagement.Dtos.StockDto;
 using InventoryManagement.Models;
 using InventoryManagement.Services.StockServices;
@@ -20,6 +21,22 @@ namespace InventoryManagement.Controllers
         {
             _stockService = stockService;
             _mapper = mapper;
+        }
+
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchStocks(string? keyword)
+        {
+            if (keyword == null)
+            {
+                var allStocks = await _stockService.GetAllStockAsync();
+                return Ok(allStocks);
+            }
+            var stocks = await _stockService.SearchStockAsync(keyword);
+
+            var stockDto = _mapper.Map<List<CreateStockDto>>(stocks);
+
+            return Ok(stockDto);
+
         }
 
         [HttpGet]

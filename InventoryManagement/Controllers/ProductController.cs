@@ -22,6 +22,23 @@ namespace InventoryManagement.Controllers
             _mapper = mapper;
         }
 
+
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchProducts(string? keyword)
+        {
+            if (keyword == null)
+            {
+                var allProducts = await _productService.GetAllProductAsync();
+                return Ok(allProducts);
+            }
+            var products = await _productService.SearchProductAsync(keyword);
+          
+            var productDto = _mapper.Map<List<ProductDto>>(products);
+
+            return Ok(productDto);
+        
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -67,7 +84,7 @@ namespace InventoryManagement.Controllers
 
             var sendVal = await _productService.GetProductAsync(returnVal.Id);
 
-            var productDto = _mapper.Map<List<ProductDto>>(sendVal);
+            var productDto = _mapper.Map<ProductDto>(sendVal);
 
             return Ok(productDto);
         }

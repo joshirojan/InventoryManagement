@@ -13,5 +13,7 @@ namespace InventoryManagement.Services.StockServices
         Task<Stock> UpdateStockAsync(Stock stock, CreateStockDto CreateStockDto);
 
         Task<Stock> DeleteStockAsync(Stock stock);
+
+        Task<List<Stock>> SearchStockAsync(string keyword);
     }
 }

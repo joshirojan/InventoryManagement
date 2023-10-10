@@ -35,6 +35,19 @@ namespace InventoryManagement.Services.ProductServices
             return products;
         }
 
+        public async Task<List<Product>> SearchProductAsync(string keyword)
+        { 
+            if (keyword == null)
+            {
+                var products = await _dbContext.Products.Include(p => p.Category).ToListAsync();
+                return products;
+            }
+            var matchingProducts = _dbContext.Products.Include(p => p.Category)
+                .Where(x => x.Name.ToLower().Contains(keyword.ToLower()))
+                .ToList();
+            return matchingProducts;
+        }
+
         public async Task<Product?> GetProductAsync([FromRoute] int productId)
         {
             var product =  await _dbContext.Products.Include(p => p.Category).FirstOrDefaultAsync(x => x.Id == productId);
